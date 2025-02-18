@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Driven Preventive Health Management - Maize Crop</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>MaizeGuard</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="dashboard.html">dashboard</a></li>
+                <li><a href="menitor.html">menitor</a></li>
+                <li><a href="recommendations.html">recommendations/a></li>
+                <li><a href="history.html">history</a></li>
+                <li><a href="support.html">support</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h2>Welcome to MaizeGuard</h2>
+            <p>Your AI-Powered Solution for Optimal Crop Health Management</p>
+            <p>Monitor your maize crop, receive preventive alerts, and make data-driven decisions for healthier yields and a sustainable farm.</p>
+            
+            <a href="#login-form" class="cta-btn">Get Started</a>
+        </div>
+        <div class="hero-image">
+            <img src="images/healthcrop.jpeg" alt="Maize Crop Illustration" class="hero-img">
+        </div>
+    </section>
+    <section id="login-form" class="login-section">
+        <h3>Login to Your Farm Dashboard</h3>
+        <form id="login" class="login-form" onsubmit="return validateForm()">
+            <label for="email">Username/Email</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Enter your password">
+            
+            <button type="submit" class="login-btn">Login</button>
+            <div class="extra-links">
+                <a href="#" class="forgot-password">Forgot Password?</a>
+                <p>New to MaizeGuard? <a href="#">Sign Up</a></p>
+            </div>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2025 MaizeGuard. All Rights Reserved.</p>
+        <div class="social-links">
+            <a href="#">Facebook</a> | <a href="#">Twitter</a> | <a href="#">Instagram</a>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>
