@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics and Insights: Maize Crop Health</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+
+        h1 {
+            text-align: center;
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #00796b;
+            margin: 20px 0;
+            font-size: 1.5rem;
+        }
+    
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #00796b;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 6px;
+            }
+
+            .chart-container {
+                height: 250px;
+            }
+        .generate-report-btn {
+            display: inline-block;
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            margin: 20px 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .generate-report-btn:hover {
+            background-color: #004d40;
+        }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Analytics and Insights: Maize Crop Health</h1>
+        <h2>Trend Analysis: Crop Health, Soil Conditions, and Weather Patterns</h2>
+        <div class="chart-container">
+            <canvas id="cropHealthChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="soilConditionChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="weatherPatternsChart"></canvas>
+        </div>
+        <h2>Historical Data Table</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Soil pH</th>
+                        <th>Crop Health (%)</th>
+                        <th>Rainfall (mm)</th>
+                        <th>Temperature (°C)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>6.2</td>
+                        <td>85</td>
+                        <td>120</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>6.4</td>
+                        <td>88</td>
+                        <td>140</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>6.6</td>
+                        <td>90</td>
+                        <td>150</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>6.8</td>
+                        <td>92</td>
+                        <td>160</td>
+                        <td>30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h1>AI-Driven Crop Health Management System</h1>
+        <h2>Detailed Reports: Crop Performance, Health Management, and Farm Productivity</h2>
+        <button class="generate-report-btn" onclick="generateReport()">Generate Detailed Report</button>
+        <h2>Farm Productivity & Crop Health Report</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Crop Yield (tons/ha)</th>
+                        <th>Soil Health Score</th>
+                        <th>Pest and Disease Incidence (%)</th>
+                        <th>Rainfall (mm)</th>
+                        <th>Temperature (°C)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2020</td>
+                        <td>6.5</td>
+                        <td>85</td>
+                        <td>12</td>
+                        <td>120</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>2021</td>
+                        <td>7.2</td>
+                        <td>88</td>
+                        <td>10</td>
+                        <td>140</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>2022</td>
+                        <td>7.8</td>
+                        <td>90</td>
+                        <td>8</td>
+                        <td>150</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>2023</td>
+                        <td>8.1</td>
+                        <td>92</td>
+                        <td>6</td>
+                        <td>160</td>
+                        <td>30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="report-container" style="display: none;">
+            <h2>Generated Report</h2>
+            <p id="report-content">The detailed report for the farm's performance is being generated...</p>
+        </div>
+          <h2>Cost Analysis: Fertilizers, Pesticides, Irrigation, and Other Inputs</h2>
+          <button class="generate-report-btn" onclick="generateReport()">Generate Cost Analysis Report</button>
+          <h2>Cost Overview of Inputs for the Year</h2>
+          <div class="table-container">
+              <table>
+                  <thead>
+                      <tr>
+                          <th>Year</th>
+                          <th>Fertilizers ($)</th>
+                          <th>Pesticides ($)</th>
+                          <th>Irrigation ($)</th>
+                          <th>Labor ($)</th>
+                          <th>Other Inputs ($)</th>
+                          <th>Total Cost ($)</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>2020</td>
+                          <td>2500</td>
+                          <td>1500</td>
+                          <td>1200</td>
+                          <td>1000</td>
+                          <td>800</td>
+                          <td>7000</td>
+                      </tr>
+                      <tr>
+                          <td>2021</td>
+                          <td>2800</td>
+                          <td>1600</td>
+                          <td>1300</td>
+                          <td>1100</td>
+                          <td>900</td>
+                          <td>7700</td>
+                      </tr>
+                      <tr>
+                          <td>2022</td>
+                          <td>2900</td>
+                          <td>1700</td>
+                          <td>1350</td>
+                          <td>1200</td>
+                          <td>950</td>
+                          <td>7500</td>
+                      </tr>
+                      <tr>
+                          <td>2023</td>
+                          <td>3000</td>
+                          <td>1800</td>
+                          <td>1400</td>
+                          <td>1250</td>
+                          <td>1000</td>
+                          <td>7450</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div id="report-container" style="display: none;">
+              <h2>Generated Cost Analysis Report</h2>
+              <p id="report-content">The cost analysis report is being generated...</p>
+          </div>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const cropHealthData = {
+            labels: ['2020', '2021', '2022', '2023'],
+            datasets: [{
+                label: 'Crop Health (%)',
+                data: [85, 88, 90, 92],
+                borderColor: '#00796b',
+                backgroundColor: 'rgba(0, 121, 107, 0.2)',
+                borderWidth: 2,
+                fill: true,
+            }]
+        };
+        const soilConditionData = {
+            labels: ['2020', '2021', '2022', '2023'],
+            datasets: [{
+                label: 'Soil pH',
+                data: [6.2, 6.4, 6.6, 6.8],
+                borderColor: '#f39c12',
+                backgroundColor: 'rgba(243, 156, 18, 0.2)',
+                borderWidth: 2,
+                fill: true,
+            }]
+        };
+        const weatherPatternsData = {
+            labels: ['2020', '2021', '2022', '2023'],
+            datasets: [
+                {
+                    label: 'Rainfall (mm)',
+                    data: [120, 140, 150, 160],
+                    borderColor: '#2980b9',
+                    backgroundColor: 'rgba(41, 128, 185, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                },
+                {
+                    label: 'Temperature (°C)',
+                    data: [24, 26, 28, 30],
+                    borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }
+            ]
+        };
+        const cropHealthConfig = {
+            type: 'line',
+            data: cropHealthData,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Crop Health Over Time'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Crop Health (%)'
+                        },
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            }
+        };
+        const soilConditionConfig = {
+            type: 'line',
+            data: soilConditionData,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Soil pH Over Time'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Soil pH'
+                        },
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            }
+        };
+        const weatherPatternsConfig = {
+            type: 'line',
+            data: weatherPatternsData,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Weather Patterns Over Time'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Value'
+                        },
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            }
+        };
+        const cropHealthCtx = document.getElementById('cropHealthChart').getContext('2d');
+        new Chart(cropHealthCtx, cropHealthConfig);
+
+        const soilConditionCtx = document.getElementById('soilConditionChart').getContext('2d');
+        new Chart(soilConditionCtx, soilConditionConfig);
+
+        const weatherPatternsCtx = document.getElementById('weatherPatternsChart').getContext('2d');
+        new Chart(weatherPatternsCtx, weatherPatternsConfig);
+        function generateReport() {
+            document.querySelector('.table-container').style.display = 'none';
+            document.getElementById('report-container').style.display = 'block';
+            setTimeout(() => {
+                const reportContent = `
+                    <strong>Farm Performance Report (2020-2023)</strong><br><br>
+                    Crop Yield improved by 2.6 tons/ha from 2020 to 2023, reflecting an overall increase in productivity.<br>
+                    Soil Health Score increased from 85% to 92%, indicating better soil management practices.<br>
+                    Pest and Disease Incidence dropped significantly from 12% in 2020 to 6% in 2023, showcasing the effectiveness of pest control methods.<br>
+                    Rainfall increased from 120mm in 2020 to 160mm in 2023, positively impacting crop yields.<br>
+                    Average Temperature increased from 24°C to 30°C, indicating a warming trend which may require adaptation in farming practices.<br><br>
+                    <strong>Conclusion:</strong><br>
+                    The farm has seen steady improvements in crop health, yield, and productivity due to effective health management practices, timely irrigation, and integrated pest management. Future focus should be on adapting to changing weather patterns and further improving soil health.
+                `;
+                document.getElementById('report-content').innerHTML = reportContent;
+            }, 2000); 
+        }
+           function generateReport() {
+            document.querySelector('.table-container').style.display = 'none';
+            document.getElementById('report-container').style.display = 'block'
+            setTimeout(() => {
+                const reportContent = `
+                    <strong>Cost Analysis Report (2020-2023)</strong><br><br>
+                    Over the past four years, the total cost of farming inputs has varied, reflecting changes in prices and resource requirements.<br>
+                    - Fertilizer costs have steadily increased from $2500 in 2020 to $3000 in 2023, suggesting the need for more efficient nutrient management.<br>
+                    - Pesticide costs increased slightly from $1500 to $1800, but the overall decrease in pest and disease incidence indicates improved pest management.<br>
+                    - Irrigation costs also rose, from $1200 to $1400, likely due to increased water demand as temperatures rose.<br>
+                    - Labor costs have remained relatively stable, showing a consistent need for skilled labor in farm operations.<br>
+                    - Other input costs, such as machinery, seeds, and equipment maintenance, have fluctuated, reaching $1000 in 2023.<br><br>
+                    <strong>Conclusion:</strong><br>
+                    To improve profitability, it is essential to focus on reducing input costs by optimizing fertilizer use, improving pest control, and increasing water-use efficiency. Consider exploring alternatives for labor management and reducing other miscellaneous costs.<br>
+                `;
+                document.getElementById('report-content').innerHTML = reportContent;
+            }, 2000); 
+        }
+    </script>
+
+</body>
+</html>
