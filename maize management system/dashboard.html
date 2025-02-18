@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaizeGuard - Crop Health Dashboard</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        h1, h3 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            padding: 10px;
+            color: white;
+            text-align: center;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            z-index: 1;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+            color: black;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .form-section,
+        .result-section,
+        .recommendation-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="file"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .upload-btn {
+            background-color: #3498db;
+            margin-top: 10px;
+        }
+
+        .upload-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .results-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .chart-container canvas {
+            width: 100%;
+            height: 400px;
+        }
+
+        .ai-analysis {
+            margin-top: 40px;
+            font-size: 1rem;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-analysis h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .ai-analysis p {
+            font-size: 1rem;
+            color: #34495e;
+            margin-top: 10px;
+        }
+
+
+        .results-section h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .analysis-box {
+            margin-top: 30px;
+            font-size: 1rem;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .analysis-box h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .analysis-box p {
+            font-size: 1rem;
+            color: #34495e;
+            margin-top: 10px;
+        }
+        .upload-section {
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .upload-section input[type="file"] {
+            padding: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+            width: 100%;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .upload-section button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .upload-section button:hover {
+            background-color: #2980b9;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            .results-section {
+                padding: 20px;
+            }
+
+            .upload-section {
+                margin: 20px 0;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>MaizeGuard - Crop Health Dashboard</h1>
+        <div class="dropdown">
+            <button class="dropbtn">Sections</button>
+            <div class="dropdown-content">
+                <a href="#InputSection">Input Section</a>
+                <a href="#ResultSection">Result Section</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="inputSection" class="form-section">
+            <h3>Enter Crop Health Data</h3>
+            <form id="cropForm">
+                <div class="form-group">
+                    <label for="cropType">Crop Type</label>
+                    <input type="text" id="cropType" name="cropType" value="Maize" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" placeholder="Enter your location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="weather">Current Weather Conditions</label>
+                    <input type="text" id="weather" name="weather" placeholder="e.g., Temperature, Humidity, Soil Moisture" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cropConditions">Recent Crop Conditions</label>
+                    <textarea id="cropConditions" name="cropConditions" placeholder="Describe the crop appearance or growth stage" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="imageUpload">Upload Image of Maize Plant (Optional for AI Recognition)</label>
+                    <input type="file" id="imageUpload" name="imageUpload" class="upload-btn" accept="image/*">
+                </div>
+
+                <button type="submit">Submit Data</button>
+            </form>
+        </section>
+
+        <section class="results-section">
+            <h2>Crop Health Analysis Results</h2>
+            <div class="chart-container">
+                <h3>Temperature Trends Over the Last 30 Days</h3>
+                <canvas id="temperatureChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h3>Soil Moisture Levels Over the Last 30 Days</h3>
+                <canvas id="moistureChart"></canvas>
+            </div>
+            <div class="ai-analysis">
+                <h3>AI-Driven Health Analysis</h3>
+                <p id="health-analysis">
+                    Based on the collected data, the AI model predicts a high likelihood of optimal crop health
+                    with minimal pest or disease stress. The crop appears to be in the early growth stage with sufficient moisture levels.
+                </p>
+            </div>
+        </section>
+        <section class="results-section">
+            <h2>Crop Health Analysis and Disease Threats</h2>
+            <div class="analysis-box">
+                <h3>Health Analysis</h3>
+                <p id="health-analysis">
+                    Based on the environmental data, your maize crop appears to be in good health, but there may be signs of nutrient deficiency.
+                </p>
+            </div>
+            <div class="analysis-box">
+                <h3>Possible Disease Threats</h3>
+                <p id="disease-threat">
+                    No disease threats detected yet.
+                </p>
+            </div>
+            <div class="upload-section">
+                <h3>Upload Image for Disease Detection</h3>
+                <input type="file" id="crop-image" accept="image/*">
+                <button onclick="detectDisease()">Analyze Image</button>
+            </div>
+        </section>
+    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.getElementById('cropForm').addEventListener('submit', function (e) {
+            e.preventDefault(); 
+            const cropType = document.getElementById('cropType').value;
+            const location = document.getElementById('location').value;
+            const weather = document.getElementById('weather').value;
+            const cropConditions = document.getElementById('cropConditions').value;
+            const imageUpload = document.getElementById('imageUpload').files[0]; 
+            if (!location || !weather || !cropConditions) {
+                alert("Please fill in all the required fields.");
+                return;
+            }
+            alert(`
+                Crop Type: ${cropType}\n
+                Location: ${location}\n
+                Weather Conditions: ${weather}\n
+                Crop Conditions: ${cropConditions}\n
+                Image Uploaded: ${imageUpload ? imageUpload.name : 'None'}
+            `);
+            document.getElementById('cropForm').reset();
+        });
+    const temperatureData = {
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+        datasets: [{
+            label: 'Temperature (°C)',
+            data: [28, 29, 31, 30, 28, 32, 33, 34, 30, 31, 32, 30, 29, 28, 31, 32, 33, 30, 31, 32, 34, 35, 36, 37, 35, 34, 32, 31, 30, 29],
+            fill: false,
+            borderColor: 'rgba(255, 99, 132, 1)',
+            tension: 0.1
+        }]
+    };
+
+    const moistureData = {
+        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+        datasets: [{
+            label: 'Soil Moisture (%)',
+            data: [60, 58, 62, 65, 67, 70, 72, 75, 78, 80, 83, 85, 88, 90, 85, 80, 75, 72, 70, 68, 65, 62, 60, 58, 55, 53, 52, 50, 48, 45],
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            tension: 0.1
+        }]
+    };
+    const ctxTemp = document.getElementById('temperatureChart').getContext('2d');
+    const temperatureChart = new Chart(ctxTemp, {
+        type: 'line',
+        data: temperatureData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    min: 25,
+                    max: 40
+                }
+            }
+        }
+    });
+    const ctxMoisture = document.getElementById('moistureChart').getContext('2d');
+    const moistureChart = new Chart(ctxMoisture, {
+        type: 'line',
+        data: moistureData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    min: 40,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    function generateAIAnalysis() {
+        const healthAnalysis = `Based on the last 30 days of data:
+        - Temperature is within the optimal range for maize growth.
+        - Soil moisture is well-maintained at 60-80%, indicating healthy conditions.
+        The crop is predicted to be in a healthy state with minimal stress and good potential for growth.`;
+        document.getElementById('health-analysis').textContent = healthAnalysis;
+    }
+
+    generateAIAnalysis();
+
+    function generateAIAnalysis() {
+            const healthAnalysis = `
+                The maize crop is generally in good health. However, there are early signs of nitrogen deficiency in some leaves. 
+                We recommend applying a nitrogen-rich fertilizer to promote healthier growth.
+            `;
+            document.getElementById('health-analysis').textContent = healthAnalysis;
+        }
+        function detectDisease() {
+            const uploadedImage = document.getElementById('crop-image').files[0];
+            if (uploadedImage) {
+                const diseaseThreat = "Potential disease detected: Maize Rust. Apply fungicides immediately.";
+                document.getElementById('disease-threat').textContent = diseaseThreat;
+            } else {
+                document.getElementById('disease-threat').textContent = "No image uploaded for disease detection.";
+            }
+        }
+        window.onload = function () {
+            generateAIAnalysis();
+        };
+
+    </script>
+
+</body>
+
+</html>
