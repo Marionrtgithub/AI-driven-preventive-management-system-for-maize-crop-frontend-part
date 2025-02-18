@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maize Crop Health Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 20px;
+        }
+        header {
+            background-color: #00796b;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section-title {
+            margin-top: 40px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .graph-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .graph {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #00796b;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f4f4f4;
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 915px) {
+            .graph-container {
+                flex-direction: column;
+            }
+            .graph-container {
+                flex-direction: column;
+            }
+
+            table th, table td {
+                font-size: 0.9rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 412px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+            }
+
+            table th, table td {
+                padding: 8px;
+                font-size: 0.9rem;
+                width: 20%; 
+            }
+
+            .graph {
+                width: 100%;
+                max-width: 100%;
+            }
+            table th, table td {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+
+            .graph {
+                width: 100%;
+                max-width: 100%;
+            }
+        
+        .input-container {
+            margin-top: 20px;
+        }
+
+        .input-container input,
+        .input-container select,
+        .input-container button {
+            padding: 10px;
+            margin-right: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .input-container input,
+        .input-container select {
+            width: 200px;
+        }
+        .chart-container {
+                height: 250px;
+            }
+
+    }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <p>Track Your Crop Yield and Preventive Health Management</p>
+    </header>
+    <div class="container">
+        <section>
+            <div class="section-title">
+                <h2>Historical Yield Records</h2>
+                <p>Visualize past yield trends to help in preventive health management of your maize crop.</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Yield (kg/ha)</th>
+                        <th>Weather Condition</th>
+                        <th>Soil Health</th>
+                    </tr>
+                </thead>
+                <tbody id="yield-table-body">
+                </tbody>
+            </table>
+        </section>
+        <section class="graph-container">
+            <div class="graph">
+                <canvas id="yieldChart"></canvas>
+            </div>
+        </section>
+    </div>
+    <section>
+        <div class="section-title">
+            <h2>Historical Disease and Pest Incidence</h2>
+            <p>Log and analyze past disease outbreaks and pest infestations, along with the effectiveness of management strategies used.</p>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="disease-name" placeholder="Disease/Pest Name">
+            <input type="text" id="year" placeholder="Year of Occurrence">
+            <input type="text" id="affected-area" placeholder="Affected Area (ha)">
+            <input type="text" id="severity" placeholder="Severity (1-10)">
+            <input type="text" id="management-strategy" placeholder="Management Strategy">
+            <input type="text" id="effectiveness" placeholder="Effectiveness (1-10)">
+            <button onclick="addData()">Add Data</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Disease/Pest</th>
+                    <th>Year</th>
+                    <th>Affected Area (ha)</th>
+                    <th>Severity</th>
+                    <th>Management Strategy</th>
+                    <th>Effectiveness</th>
+                </tr>
+            </thead>
+            <tbody id="disease-table-body">
+            </tbody>
+        </table>
+    </section>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Soil pH</th>
+                    <th>Organic Matter (%)</th>
+                    <th>Nitrogen Content (kg/ha)</th>
+                    <th>Phosphorus Content (kg/ha)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2020</td>
+                    <td>6.2</td>
+                    <td>3.5</td>
+                    <td>120</td>
+                    <td>25</td>
+                </tr>
+                <tr>
+                    <td>2021</td>
+                    <td>6.4</td>
+                    <td>3.8</td>
+                    <td>130</td>
+                    <td>28</td>
+                </tr>
+                <tr>
+                    <td>2022</td>
+                    <td>6.6</td>
+                    <td>4.0</td>
+                    <td>140</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>6.8</td>
+                    <td>4.2</td>
+                    <td>150</td>
+                    <td>32</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="chart-container">
+        <canvas id="soilHealthChart"></canvas>
+    </div>
+
+    </div>  
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const yieldData = [
+            { year: 2020, yield: 5000, weather: 'Good', soil: 'Healthy' },
+            { year: 2021, yield: 4500, weather: 'Moderate', soil: 'Healthy' },
+            { year: 2022, yield: 4800, weather: 'Good', soil: 'Moderate' },
+            { year: 2023, yield: 4700, weather: 'Excellent', soil: 'Good' },
+            { year: 2024, yield: 4900, weather: 'Good', soil: 'Healthy' }
+        ];
+        const populateYieldTable = () => {
+            const tableBody = document.getElementById("yield-table-body");
+
+            yieldData.forEach(record => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${record.year}</td>
+                    <td>${record.yield}</td>
+                    <td>${record.weather}</td>
+                    <td>${record.soil}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        };
+        const createYieldChart = () => {
+            const ctx = document.getElementById('yieldChart').getContext('2d');
+            const years = yieldData.map(record => record.year);
+            const yields = yieldData.map(record => record.yield);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        label: 'Yield (kg/ha)',
+                        data: yields,
+                        borderColor: 'rgba(0, 123, 255, 0.7)',
+                        backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Yield (kg/ha)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+        populateYieldTable();
+        createYieldChart();
+
+        let diseaseData = [];
+const addData = () => {
+    const diseaseName = document.getElementById("disease-name").value;
+    const year = document.getElementById("year").value;
+    const affectedArea = document.getElementById("affected-area").value;
+    const severity = document.getElementById("severity").value;
+    const managementStrategy = document.getElementById("management-strategy").value;
+    const effectiveness = document.getElementById("effectiveness").value;
+    if (!diseaseName || !year || !affectedArea || !severity || !managementStrategy || !effectiveness) {
+        alert("Please fill in all fields.");
+        return;
+    }
+    const newRecord = {
+        diseaseName,
+        year,
+        affectedArea,
+        severity,
+        managementStrategy,
+        effectiveness
+    };
+    diseaseData.push(newRecord);
+    updateTable();
+};
+const updateTable = () => {
+    const tableBody = document.getElementById("disease-table-body");
+    tableBody.innerHTML = "";
+    diseaseData.forEach((record) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${record.diseaseName}</td>
+            <td>${record.year}</td>
+            <td>${record.affectedArea}</td>
+            <td>${record.severity}</td>
+            <td>${record.managementStrategy}</td>
+            <td>${record.effectiveness}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+};
+
+   const data = {
+            labels: ['2020', '2021', '2022', '2023'],
+            datasets: [
+                {
+                    label: 'Soil pH',
+                    data: [6.2, 6.4, 6.6, 6.8],
+                    borderColor: '#00796b',
+                    backgroundColor: 'rgba(0, 121, 107, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                },
+                {
+                    label: 'Organic Matter (%)',
+                    data: [3.5, 3.8, 4.0, 4.2],
+                    borderColor: '#f39c12',
+                    backgroundColor: 'rgba(243, 156, 18, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                },
+                {
+                    label: 'Nitrogen Content (kg/ha)',
+                    data: [120, 130, 140, 150],
+                    borderColor: '#2980b9',
+                    backgroundColor: 'rgba(41, 128, 185, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }
+            ]
+        };
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Soil Health Trends (2020-2023)'
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Soil Health Metrics'
+                        },
+                        ticks: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            }
+        };
+
+        const ctx = document.getElementById('soilHealthChart').getContext('2d');
+        new Chart(ctx, config);
+
+    </script>
+
+</body>
+</html>
