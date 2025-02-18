@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maize Crop Health Management - Fertilizer Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .result-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-content {
+            font-size: 16px;
+            color: #555;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .result-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-content {
+            font-size: 16px;
+            color: #555;
+        }
+        input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            header h1 {
+                font-size: 24px;
+            }
+            .button {
+                width: 100%;
+                padding: 12px;
+                font-size: 18px;
+            }
+            
+            label {
+                font-size: 14px;
+            }
+
+            input[type="number"] {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+        
+
+        @media (max-width: 480px) {
+            header {
+                background-color: #4CAF50;
+            }
+
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            header h1 {
+                font-size: 20px;
+            }
+            .button {
+                padding: 14px;
+                font-size: 20px;
+            }
+            .results {
+                padding: 10px;
+            }
+            .result-header {
+                font-size: 16px;
+            }
+            .result-content {
+                font-size: 14px;
+            }
+            label {
+                font-size: 12px;
+            }
+
+            input[type="number"] {
+                font-size: 12px;
+                padding: 14px;
+            }
+
+            .results {
+                padding: 10px;
+            }
+
+            .result-header {
+                font-size: 16px;
+            }
+
+            .result-content {
+                font-size: 14px;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Maize Crop Health Management: Fertilizer Recommendations</h1>
+    
+</header>
+
+<div class="container">
+    <h2>Enter Soil and Plant Health Data</h2>
+    <form id="fertilizerForm">
+        <label for="soilPh">Soil pH (1-14):</label>
+        <input type="number" id="soilPh" min="1" max="14" required>
+
+        <label for="nitrogen">Nitrogen Level (ppm):</label>
+        <input type="number" id="nitrogen" min="0" required>
+
+        <label for="phosphorus">Phosphorus Level (ppm):</label>
+        <input type="number" id="phosphorus" min="0" required>
+
+        <label for="potassium">Potassium Level (ppm):</label>
+        <input type="number" id="potassium" min="0" required>
+
+        <button type="submit" class="button">Get Fertilizer Recommendations</button>
+    </form>
+
+    <div class="results" id="recommendationResults" style="display: none;">
+        <div class="result-header">Fertilizer Recommendations:</div>
+        <div class="result-content" id="fertilizerSuggestions"></div>
+    </div>
+
+    <h2>Enter Pest or Disease Symptoms</h2>
+    <form id="pestDiseaseForm">
+        <label for="symptom">Describe Symptoms:</label>
+        <textarea id="symptom" rows="4" required></textarea>
+
+        <label for="pestDiseaseType">Pest/Disease Type (if known):</label>
+        <input type="text" id="pestDiseaseType" required>
+
+        <button type="submit" class="button">Get Treatment Recommendations</button>
+    </form>
+
+    <div class="results" id="recommendationResults" style="display: none;">
+        <div class="result-header">Pest/Disease Control Recommendations:</div>
+        <div class="result-content" id="treatmentSuggestions"></div>
+    </div>
+
+    <h2>Enter Soil Moisture and Weather Data</h2>
+    <form id="irrigationForm">
+        <label for="soilMoisture">Soil Moisture Level (0-100%):</label>
+        <input type="number" id="soilMoisture" min="0" max="100" required>
+
+        <label for="weatherForecast">Weather Forecast (1 - Rain, 0 - No Rain):</label>
+        <input type="number" id="weatherForecast" min="0" max="1" required>
+
+        <label for="lastIrrigation">Date of Last Irrigation:</label>
+        <input type="date" id="lastIrrigation" required>
+
+        <button type="submit" class="button">Get Irrigation Schedule</button>
+    </form>
+
+    <div class="results" id="recommendationResults" style="display: none;">
+        <div class="result-header">Irrigation Scheduling Recommendations:</div>
+        <div class="result-content" id="irrigationSuggestions"></div>
+    </div>
+
+</div>
+
+<script>
+    document.getElementById("fertilizerForm").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+        var soilPh = parseFloat(document.getElementById("soilPh").value);
+        var nitrogen = parseFloat(document.getElementById("nitrogen").value);
+        var phosphorus = parseFloat(document.getElementById("phosphorus").value);
+        var potassium = parseFloat(document.getElementById("potassium").value);
+
+        var fertilizerRecommendations = "";
+        if (soilPh < 6) {
+            fertilizerRecommendations += "<p><strong>Acidic Soil:</strong> Apply lime or dolomite to raise pH.</p>";
+        } else if (soilPh > 7.5) {
+            fertilizerRecommendations += "<p><strong>Alkaline Soil:</strong> Apply sulfur or gypsum to reduce pH.</p>";
+        }
+
+        if (nitrogen < 50) {
+            fertilizerRecommendations += "<p><strong>Low Nitrogen:</strong> Apply urea or ammonium nitrate to boost nitrogen levels.</p>";
+        }
+        if (phosphorus < 30) {
+            fertilizerRecommendations += "<p><strong>Low Phosphorus:</strong> Use single superphosphate or triple superphosphate.</p>";
+        }
+        if (potassium < 100) {
+            fertilizerRecommendations += "<p><strong>Low Potassium:</strong> Use potassium chloride or potassium sulfate.</p>";
+        }
+
+        if (fertilizerRecommendations === "") {
+            fertilizerRecommendations = "<p>No fertilizer adjustments needed at this time. Your crop seems to be healthy!</p>";
+        }
+        document.getElementById("fertilizerSuggestions").innerHTML = fertilizerRecommendations;
+        document.getElementById("recommendationResults").style.display = "block";
+    });
+
+    document.getElementById("pestDiseaseForm").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+        var symptom = document.getElementById("symptom").value.toLowerCase();
+        var pestDiseaseType = document.getElementById("pestDiseaseType").value.toLowerCase()
+
+        var treatmentRecommendations = "";
+
+        if (pestDiseaseType.includes("corn borer") || symptom.includes("holes in leaves")) {
+            treatmentRecommendations += "<p><strong>Suggested Treatment:</strong> Apply eco-friendly Bacillus thuringiensis (Bt) or neem oil. These options are organic and effective against corn borers.</p>";
+        }
+        if (pestDiseaseType.includes("aphids") || symptom.includes("yellowing leaves")) {
+            treatmentRecommendations += "<p><strong>Suggested Treatment:</strong> Use insecticidal soap or horticultural oil. For eco-friendly control, introduce ladybugs, which are natural predators of aphids.</p>";
+        }
+        if (pestDiseaseType.includes("maize weevil") || symptom.includes("grain damage")) {
+            treatmentRecommendations += "<p><strong>Suggested Treatment:</strong> Use diatomaceous earth or eco-friendly insect traps to control maize weevils.</p>";
+        }
+        if (pestDiseaseType.includes("blight") || symptom.includes("dark lesions on leaves")) {
+            treatmentRecommendations += "<p><strong>Suggested Treatment:</strong> Apply copper-based fungicides as an eco-friendly option. Also, ensure proper crop rotation to reduce the spread of blight.</p>";
+        }
+        if (pestDiseaseType.includes("rust") || symptom.includes("orange pustules on leaves")) {
+            treatmentRecommendations += "<p><strong>Suggested Treatment:</strong> Apply sulfur-based fungicides or copper sulfate. Remove infected leaves to minimize spread.</p>";
+        }
+
+        if (treatmentRecommendations === "") {
+            treatmentRecommendations = "<p>No specific pest or disease detected based on symptoms. Ensure crop rotation, proper irrigation, and maintenance of soil health to prevent issues.</p>";
+        }
+
+        document.getElementById("treatmentSuggestions").innerHTML = treatmentRecommendations;
+        document.getElementById("recommendationResults").style.display = "block";
+    });
+
+    document.getElementById("irrigationForm").addEventListener("submit", function(event) {
+        event.preventDefault(); 
+
+        var soilMoisture = parseFloat(document.getElementById("soilMoisture").value);
+        var weatherForecast = parseInt(document.getElementById("weatherForecast").value);
+        var lastIrrigationDate = new Date(document.getElementById("lastIrrigation").value);
+        var currentDate = new Date();
+        var diffTime = Math.abs(currentDate - lastIrrigationDate);
+        var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        var irrigationRecommendations = "";
+        if (soilMoisture < 30 && weatherForecast === 0) {
+            irrigationRecommendations += "<p><strong>Low Soil Moisture:</strong> Irrigation needed. Water the crop immediately.</p>";
+        } else if (soilMoisture >= 30 && soilMoisture < 60) {
+            irrigationRecommendations += "<p><strong>Moderate Soil Moisture:</strong> Water the crop in 2-3 days if no rain forecast.</p>";
+        } else if (soilMoisture >= 60) {
+            irrigationRecommendations += "<p><strong>High Soil Moisture:</strong> No irrigation needed. Wait for rain.</p>";
+        }
+
+        if (weatherForecast === 1) {
+            irrigationRecommendations += "<p><strong>Rain Forecasted:</strong> No irrigation needed for now. Monitor after rainfall.</p>";
+        }
+
+        if (diffDays >= 7 && soilMoisture < 40) {
+            irrigationRecommendations += "<p><strong>Last Irrigation Over a Week Ago:</strong> Ensure irrigation is scheduled within the next 24 hours.</p>";
+        }
+
+        if (irrigationRecommendations === "") {
+            irrigationRecommendations = "<p>No irrigation needed at this time. Your crop seems to have sufficient water.</p>";
+        }
+        document.getElementById("irrigationSuggestions").innerHTML = irrigationRecommendations;
+        document.getElementById("recommendationResults").style.display = "block";
+    });
+
+</script>
+
+</body>
+</html>
